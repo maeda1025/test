@@ -1,0 +1,37 @@
+<!-- for Site-Menu------------------------------------------------ -->
+<link rel="stylesheet" type="text/css" href="./css/menue.css">
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery.hoverintent.r7.js"></script>
+<script src="./js/jquery.mnmenu.js"></script>
+<!-- Site-Menu------------------------------------------------ -->
+<script>
+  $(document).ready(function() {
+    $('#idmenu').mnmenu();
+  });
+</script>
+
+<ul id="idmenu" class="site-menu">
+  <li>
+    <a href="./test_index.html">Test-Index</a>
+  </li>
+  <li>Admin
+    <ul>
+      <li>Schedule-Editor</li>
+    </ul>
+  </li>
+  <li>Monitor
+    <ul>
+      <li>Today</li>
+      <li>Check</li>
+    </ul>
+  </li>
+  <li>DB Table
+    <ul>
+      <li>Schedule</li>
+      <li>Course</li>
+      <li><a href="./instructor.php">Instructor</a></li>
+      <li>Location</li>
+    </ul>
+  </li>
+  <li>Bihin-System</li>
+</ul>

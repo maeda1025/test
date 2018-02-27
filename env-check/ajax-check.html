@@ -1,0 +1,28 @@
+<script type="text/javascript">
+function chkAjax(){
+    var xmlhttp=false;
+    try {
+        /* IE5, IE6 */
+        xmlHttp=new ActiveXObject("Msxml2.XMLHTTP"); /* Windows XP */
+        document.getElementById("resChkAjax").innerHTML="[ IE5, IE6 (Windows XP) ] Ajaxが使えます。";
+    }catch(e){
+        try {
+            /* IE5, IE6 */
+            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP"); /* Windows XP未満 */
+            document.getElementById("resChkAjax").innerHTML="[ IE5, IE6 (Windows XP未満) ] Ajaxが使えます。";
+        }catch(e1){
+            try {
+                /* Firefox, Opera 8以上, Safari */
+                xmlHttp=new XMLHttpRequest();
+                document.getElementById("resChkAjax").innerHTML="[ Firefox, Opera 8以上, Safari ] Ajaxが使えます。";
+            }catch(e2){
+                document.getElementById("resChkAjax").innerHTML="Ajax未対応ブラウザです";
+            }
+        }
+    }
+}
+window.onload=function(){
+    chkAjax();
+}
+</script>
+<div id="resChkAjax"></div>

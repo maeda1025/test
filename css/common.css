@@ -1,0 +1,53 @@
+/* html,body{
+	height:99%;
+	font-size:10px;
+//	font-family: "Meiryo UI","Meiryo","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","ＭＳ Ｐゴシック","Osaka",sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont,'Helvetica Neue','Segoe UI','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+} */
+html{
+  font-size: 1rem;
+}
+
+body{
+  margin-top:0rem;
+  /* margin-left:auto;
+  margin-right: auto; */
+}
+
+h1{
+  font-size: 2rem;
+  margin-top: 0rem;
+  margin-bottom: -1rem;
+}
+
+table {
+  margin-top: 0.5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  border-collapse: collapse;
+  border-spacing: 1px;
+  line-height: 1;
+  font-size: 1rem;
+  width: 95%;
+}
+
+caption{
+  color: black;
+  font-weight: bold;
+}
+
+th {
+  width: auto;
+  padding: 1rem;
+  font-weight: bold;
+  color: #fff;
+  vertical-align: top;
+  background: #464547;
+  text-align: center;
+  vertical-align: center;
+  border-width: 0px 0px;
+}
+
+.even {
+  background: #D9E1F2;
+}
