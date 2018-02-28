@@ -1,10 +1,10 @@
 <?php
-include("C:/Users/maeda/Documents/GitHub/test/parameter.php");
+include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
 require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $inst_name = htmlspecialchars($_POST["inst_name_del"], ENT_QUOTES);
+        $inst_id = htmlspecialchars($_POST["inst_id"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -20,13 +20,13 @@ else {
   exit('データベース接続失敗。'.$e->getMessage());
   }
 //----------------------------------------------------------------------
-  $table="Instructor_Table";
-  $column1 = "inst_name";
-  $value1 = $inst_name;
+  $table="inst_tb";
+  $column1 = "inst_id";
+  $value1 = $inst_id;
 
-  $sql = "DELETE FROM ".$table." where $column1 = :$value1";
+  $sql = "DELETE FROM ".$table." where $column1 = :delete1";
   $stmt = $pdo -> prepare($sql);
-  $stmt->bindValue(":$value1", $value1, PDO::PARAM_STR);
+  $stmt->bindValue(":delete1", $value1, PDO::PARAM_STR);
   // $stmt->bindValue(':value', 1, PDO::PARAM_INT);
   $stmt->execute();
 

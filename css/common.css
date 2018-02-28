@@ -51,3 +51,13 @@ th {
 .even {
   background: #D9E1F2;
 }
+
+.form_del_inst{
+  margin:0;
+  /* width: 100%; */
+}
+
+input.input_table{
+  width: 100%;
+  border: none;
+}

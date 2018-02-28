@@ -17,7 +17,7 @@
 
   <?php
   //検証用---------------------------------------
-    include("C:/Users/maeda/Documents/GitHub/test/parameter.php");
+    include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
 		include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
   //--------------------------------------------
     // include("./functions_db.php");
@@ -31,17 +31,44 @@
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all($pdo,"Instructor_Table");
+      show_db_table_all_with_delete_botton($pdo,"inst_tb");
     ?>
   </div>
+
+  <?php
+// 次回inst_idの割り出し
+$next_inst_id;
+    $table="inst_tb";
+    $pdo_stmt = $pdo->query("SELECT inst_id FROM $table");
+      foreach ($pdo_stmt as $key => $value) {
+        // var_dump($value);
+        if($key!==0){
+          if($value["inst_id"]-1 == $last_inst_id){
+            $last_inst_id=$value["inst_id"];
+          }
+          else{
+            $next_inst_id = $last_inst_id+1;
+            // echo ("次回のID: ".$next_inst_id);
+            // echo "\n";
+            break;
+          }
+        }
+        else{
+          $last_inst_id=$value["inst_id"];
+          $next_inst_id=$value["inst_id"];
+        }
+      }
+   ?>
 
   <div id="dialog-form" title="講師登録">
   	<form method="post" action="./post_inst.php" id="jquery-ui-dialog">
   	<fieldset>
+      <label for="inst_id"></label>
+  		<input type="text" name="inst_id" id="inst_id" value="<?php echo $next_inst_id; ?>" style="display: none;" class="text ui-widget-content ui-corner-all" />
   		<label for="inst_name">講師名</label>
   		<input type="text" name="inst_name" id="inst_name" value="" class="text ui-widget-content ui-corner-all" />
-  		<label for="team">所属</label>
-  		<input type="team" name="team" id="team" value="" class="text ui-widget-content ui-corner-all" />
+  		<label for="inst_team">所属</label>
+  		<input type="inst_team" name="inst_team" id="inst_team" value="" class="text ui-widget-content ui-corner-all" />
   		<input type="submit" value="登録">
   	</fieldset>
   	</form>
@@ -64,7 +91,7 @@
 
 </div>
 
-
+<?php  echo '<br>';echo'<br>';echo '<br>';echo $next_inst_id; ?>
 
 </body>
 

@@ -1,8 +1,9 @@
 $(function() {
   <!-- ダイアログのフォーム要素取得 -->
+  inst_id = $( "#inst_id" ),
   inst_name = $( "#inst_name" ),
-  team = $( "#team" ),
-  allFields = $( [] ).add( inst_name ).add( team ),
+  inst_team = $( "#inst_team" ),
+  allFields = $( [] ).add( inst_id ).add( inst_name ).add( inst_team ),
   tips = $( ".validateTips" );
 
   // function updateTips( t ) {
