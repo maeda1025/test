@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Instructor List</title>
+  <title>Training List</title>
   <link rel="stylesheet" type="text/css" href="./css/common.css">
   <script src="./js/jquery-3.3.1.min.js"></script>
   <script src="./js/read-html-parts.js"></script>
@@ -16,7 +16,8 @@
 
   <?php
   //検証用---------------------------------------
-    include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
+    include("C:/Users/maeda/Documents/GitHub/test/parameter.php");
+    // include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
 		include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
     include("C:/Users/maeda/Documents/GitHub/test/function_dialog.php");
   //--------------------------------------------
@@ -27,7 +28,7 @@
 
 <body>
   <div id="menue"></div>
-  <!-- <div class="table_all"> -->
+  <div class="table_all">
 
     <div class="botton_set">
       <button id="reg_inst"><b>Instructor追加</b></button>
@@ -37,17 +38,17 @@
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all_with_delete_botton($pdo,"inst_tb");
+      show_db_table_all_with_delete_botton($pdo,"Training_Table");
     ?>
     </div>
 
     <?php
-      $next_incremental_id = next_id($pdo,'inst_tb','inst_id');
+      // $next_incremental_id = next_id($pdo,'Location_Table','location_id');
       inst_insert_dialog($next_incremental_id);
       inst_delete_dialog();
     ?>
 
-  <!-- </div> -->
+  </div>
 
 </body>
 

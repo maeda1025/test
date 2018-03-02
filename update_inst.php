@@ -4,11 +4,10 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
-        $team = htmlspecialchars($_POST["team"], ENT_QUOTES);
-
-        echo $inst_name;
-        echo $team;
+          $current_id = htmlspecialchars($_POST["current_id"], ENT_QUOTES);
+          $inst_id = htmlspecialchars($_POST["inst_id"], ENT_QUOTES);
+          $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
+          $inst_team = htmlspecialchars($_POST["inst_team"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -23,17 +22,25 @@ else {
   } catch (PDOException $e) {
   exit('データベース接続失敗。'.$e->getMessage());
   }
-//----------------------------------------------------------------------
-  $table="inst_tb";
-  $column1 = "inst_name"; $column2= "team";
+  //Entry Update----------------------------------------------------------------------
+      //----------------------------------------------------------------------
+      try{
 
-  $sql = "update $table set team = :update2 where inst_name = :update1";
-  $stmt = $pdo -> prepare($sql);
-  // $params = array(':inst_name' => 'aaa', ':team' => 'bbb', ':inst_name' => '_test');
-  $stmt->bindValue(":update1", $inst_name, PDO::PARAM_STR);
-  $stmt->bindValue(":update2", $team, PDO::PARAM_STR);
-  // $stmt->bindValue(':value', 1, PDO::PARAM_INT);
-  $stmt->execute();
+        $table="inst_tb";
+        $key_column ="inst_id"; $key_value = (int)$current_id;
+        $column1 = "inst_id"; $column2 = "inst_name"; $column3= "inst_team";
+        $value1 = (int)$inst_id; $value2 = $inst_name; $value3 = $inst_team;
+
+        $sql = "update $table set $column1 = :$column1, $column2 = :$column2, $column3 = :$column3 where $key_column = :target_key";
+        $stmt = $pdo -> prepare($sql);
+        $params = array(":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":target_key" => "$key_value");
+
+        $stmt->execute($params);
+      }
+      catch(PDOException $e){
+        header("Location:./instructor.php",true,303);
+      }
+      //----------------------------------------------------------------------
 
 // //単一フィールドのみ更新//------------------------------------------------
 //   $sql = "update $table set team = :$column2 where inst_name = :$column1";

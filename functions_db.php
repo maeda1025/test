@@ -12,6 +12,39 @@
 		return $pdo;
 	}
 
+//PHPによるID自動割り当ての次のID取得
+	function next_id($pdo,$table,$incremental_id){
+		try{
+			$pdo_stmt = $pdo->query("SELECT $incremental_id FROM $table");
+			$rowcount = ($pdo_stmt->rowCount());
+		}
+		catch(PDOException $e){
+			die($e->getMessage());
+		}
+		if($rowcount!==0){
+			foreach ($pdo_stmt as $key => $value) {
+				if($key!==0){
+					if($value["$incremental_id"]-1 == $last_incremental_id){
+						$last_incremental_id=$value["$incremental_id"];
+						$next_incremental_id = $last_incremental_id+1;
+					}
+					else{
+						$next_incremental_id = $last_incremental_id+1;
+						break;
+					}
+				}
+				else{
+					$last_incremental_id=$value["$incremental_id"];
+					$next_incremental_id = $last_incremental_id+1;
+				}
+			}
+		}
+		else{
+			$next_incremental_id = 1;
+		}
+		return $next_incremental_id;
+	}
+
 //カラム名取得
 	function get_columns_name($pdo,$table){
 		$pdo_stmt = $pdo->query("SELECT * FROM $table");
@@ -56,7 +89,7 @@
 			echo "</table>";
 	}
 
-	//DB(Table)内全データ、Table(HTML)で表示+各行にDeleteボタン
+	//DB(Table)内全データ、Table(HTML)で表示+各行にUpdate + Deleteボタン
 		function show_db_table_all_with_delete_botton($pdo,$table){
 			$pdo_stmt = $pdo->query("SELECT * FROM $table");
 			//Fileds表示
@@ -77,7 +110,9 @@
 			//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
 			while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
 				echo("<tr>");
-				printf ('<form action="./upload_inst.php" method="post">');
+				//Update Fortm作成-----------------------------------------------
+				printf ('<form action="./update_inst.php" method="post">');
+					echo('<input type="hidden" name="current_id" value="'.$result[$columns[0]].'" class="input_table">');
 				for($n=0; $n < $pdo_stmt->columnCount(); $n++){
 					echo("<td>");
 					printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
@@ -85,11 +120,11 @@
 				}
 				echo("<td>");
 					// printf ('<form action="./upload_inst.php" method="post">');
-					printf ('<input type="submit" value="Upload" class="input_table">');
+					printf ('<input type="submit" value="Update" class="input_table">');
 					// printf ('<input type ="hidden" name="inst_name_up" id ="inst_name_up" value="'.$result[$columns[0]].'"">');
 					printf ('</form>');
 				echo("</td>");
-
+				//Delete Fortm作成-----------------------------------------------
 				echo("<td>");
 					printf ('<form action="./delete_inst.php" method="post" class="form_del_inst">');
 					printf ('<input type="submit" value="Delete" class="input_table">');
@@ -103,64 +138,6 @@
 		}
 
 //PDO------------------------------------------------------------------
-
-//DB(Table)内全データ表形式で表示
-// 	function show_db_table_all($pdo,$table){
-// 		$pdo_stmt = $pdo->query("SELECT * FROM $table");
-// 	//Fileds表示
-// 	 $i = 0;
-// 	 echo "</font>"."<table border='1'>";
-// 	 echo '<caption>'.$table.'</caption>';
-//
-// 	 echo '<tr>';
-// //----------------------------------------------------------------
-// 	 for ($i = 0; $i < $pdo_stmt->columnCount(); $i++) {
-// 		 $meta = $pdo_stmt->getColumnMeta($i);
-// 		 $columns[] = $meta['name'];
-// 	 }
-// 	 foreach($columns as $column_name){
-// 	   printf("<th>".$column_name."</th>");
-// 	 }
-// 	 // $field_data = mysql_query("SHOW COLUMNS FROM $table");
-// 	 // while ($filed = mysql_fetch_array($field_data, MYSQL_ASSOC)) {
-// 	 //     $fields[] =  $filed['Field'];
-// 	 //     echo "<th>".$fields[$i]."</th>";
-// 	 //     $i++;
-// 	 // }
-// //----------------------------------------------------------------
-// 	 echo "</tr>";
-//
-// //----------------------------------------------------------------
-// 	while($row = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
-// 		foreach($row as $row_data){
-// 		  $datas[] = $row_data;
-// 		}
-// 	}
-// 	 //$table_data = mysql_query("SELECT * FROM $table");
-// 	 // while ($data = mysql_fetch_array($table_data, MYSQL_ASSOC)) {
-// 	 //     $datas[] = $data;
-// 	 // }
-// //----------------------------------------------------------------
-//
-// 	 $record_count = 10;
-// 	 $fields_count = 2;
-//
-// 	 // $record_count = mysql_num_rows($table_data);
-// 	 // $fields_count = mysql_num_fields($table_data);
-//
-// 	   foreach($datas as $data){
-// 	     $n=0;
-// 	     if($n%2==0){ echo '<tr>';}
-// 	     else{ echo '<tr class="even">';}
-//
-// 	     for($m=0; $m<$fields_count; $m++){
-// 	      echo "<td>".$data[$fields[$m]]."</td>";
-// 	     }
-// 	     echo "</tr>";
-// 	     $n++;
-// 	   }
-// 	   echo "</table><br>";
-// 	  }
 
 //DB(Table)内、特定columnデータ表形式で表示
 	function show_db_table_specific($table,$column1,$column2){

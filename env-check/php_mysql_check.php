@@ -86,28 +86,65 @@
 // //----------------------------------------------------------------
     // echo "</table><br>";
 
-//次回inst_idの割り出し----------------------------------------------------------------
-// $next_inst_id=1;
-$table="inst_tb";
-$pdo_stmt = $pdo->query("SELECT inst_id FROM $table");
-  foreach ($pdo_stmt as $key => $value) {
-    var_dump($value);
-    if($key!==0){
-      if($value["inst_id"]-1 == $last_inst_id){
-        $last_inst_id=$value["inst_id"];
-      }
-      else{
-        $next_inst_id = $last_inst_id+1;
-        echo ("次回のID: ".$next_inst_id);
-        echo "\n";
-        break;
-      }
-    }
-    else{
-      $last_inst_id=$value["inst_id"];
-      $next_inst_id=$value["inst_id"];
-    }
-    echo $next_inst_id;
-  }
-//----------------------------------------------------------------
+//Entry Update----------------------------------------------------------------------
+    //----------------------------------------------------------------------
+      $table="inst_tb";
+      $key_column ="inst_id"; $key_value ="300";
+      $column1 = "inst_id"; $column2 = "inst_name"; $column3= "inst_team";
+      $value1='400'; $value2='test300'; $value3='team300';
+
+      $sql = "update $table set $column1 = :$column1, $column2 = :$column2, $column3 = :$column3 where $key_column = :target_key";
+      $stmt = $pdo -> prepare($sql);
+      $params = array(":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":target_key" => "$key_value");
+
+      $stmt->execute($params);
+    //----------------------------------------------------------------------
+
+// //次回inst_idの割り出し----------------------------------------------------------------
+// // $next_inst_id=1;
+//   try{
+//     $table="inst_tb";
+//     $pdo_stmt = $pdo->query("SELECT inst_id FROM $table");
+//     // var_dump($pdo_stmt->rowCount());
+//     $rowcount = ($pdo_stmt->rowCount());
+//   }
+//   catch(PDOException $e){
+//     die($e->getMessage());
+//   }
+//   if($rowcount!==0){
+//     echo "rowcountが0以上:".$rowcount;
+//     echo "\n";
+//     foreach ($pdo_stmt as $key => $value) {
+//       // var_dump($value);
+//       if($key!==0){
+//         if($value["inst_id"]-1 == $last_inst_id){
+//           $last_inst_id=$value["inst_id"];
+//           $next_inst_id = $last_inst_id+1;
+//           echo "if key 0以外";
+//           echo "\n";
+//         }
+//         else{
+//           $next_inst_id = $last_inst_id+1;
+//           echo ("次回のID: ".$next_inst_id);
+//           echo "\n";
+//           break;
+//         }
+//       }
+//       else{
+//         $last_inst_id=$value["inst_id"];
+//         $next_inst_id = $last_inst_id+1;
+//         echo "else key 0";
+//         echo "\n";
+//       }
+//       echo $next_inst_id;
+//       echo "\n";
+//     }
+//   }
+//   else{
+//     $next_inst_id = 1;
+//     echo "rowcountが0:".$rowcount;
+//     echo "\n";
+//   }
+//   echo "next_inst_id:".$next_inst_id;
+// //----------------------------------------------------------------
 ?>
