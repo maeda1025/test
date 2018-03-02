@@ -4,8 +4,9 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
-        $inst_team = htmlspecialchars($_POST["inst_team"], ENT_QUOTES);
+        $location = htmlspecialchars($_POST["location"], ENT_QUOTES);
+        $team = htmlspecialchars($_POST["team"], ENT_QUOTES);
+        $sheet_counts = htmlspecialchars($_POST["sheet_counts"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -21,15 +22,16 @@ else {
   exit('データベース接続失敗。'.$e->getMessage());
   }
 //----------------------------------------------------------------------
-  $table="inst_tb";
-  $column2 = "inst_name"; $column3= "inst_team";
-  $value2 = $inst_name; $value3 = $inst_team;
+  $table="location_tb";
+  $column1 = "location"; $column2 = "team"; $column3= "sheet_counts";
+  $value1 = $location; $value2 = $team; $value3 = $sheet_counts;
 
-  $stmt = $pdo -> prepare("INSERT INTO ".$table." ($column2,$column3) VALUES (:value2, :value3)");
+  $stmt = $pdo -> prepare("INSERT INTO ".$table." ($column1,$column2,$column3) VALUES (:value1, :value2, :value3)");
+  $stmt->bindValue(':value1', $value1, PDO::PARAM_STR);
   $stmt->bindValue(':value2', $value2, PDO::PARAM_STR);
-  $stmt->bindValue(':value3', $value3, PDO::PARAM_STR);
+  $stmt->bindValue(':value3', (int)$value3, PDO::PARAM_INT);
   // $stmt->bindValue(':value', (int)$value, PDO::PARAM_INT);
   $stmt->execute();
 
- header("Location:./_instructor.php",true,303);
+ header("Location:./_location.php",true,303);
 ?>

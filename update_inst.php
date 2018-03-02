@@ -4,8 +4,8 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $current_id = htmlspecialchars($_POST["current_id"], ENT_QUOTES);
-          $inst_id = htmlspecialchars($_POST["inst_id"], ENT_QUOTES);
+          $current_name = htmlspecialchars($_POST["current_name"], ENT_QUOTES);
+          // $inst_id = htmlspecialchars($_POST["inst_id"], ENT_QUOTES);
           $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
           $inst_team = htmlspecialchars($_POST["inst_team"], ENT_QUOTES);
     }
@@ -27,18 +27,18 @@ else {
       try{
 
         $table="inst_tb";
-        $key_column ="inst_id"; $key_value = (int)$current_id;
-        $column1 = "inst_id"; $column2 = "inst_name"; $column3= "inst_team";
-        $value1 = (int)$inst_id; $value2 = $inst_name; $value3 = $inst_team;
+        $key_column ="inst_name"; $key_value = $current_name;
+        $column2 = "inst_name"; $column3= "inst_team";
+        $value2 = $inst_name; $value3 = $inst_team;
 
-        $sql = "update $table set $column1 = :$column1, $column2 = :$column2, $column3 = :$column3 where $key_column = :target_key";
+        $sql = "update $table set $column2 = :$column2, $column3 = :$column3 where $key_column = :target_key";
         $stmt = $pdo -> prepare($sql);
-        $params = array(":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":target_key" => "$key_value");
+        $params = array(":$column2" => "$value2",":$column3" => "$value3",":target_key" => "$key_value");
 
         $stmt->execute($params);
       }
       catch(PDOException $e){
-        header("Location:./instructor.php",true,303);
+        header("Location:./_instructor.php",true,303);
       }
       //----------------------------------------------------------------------
 
@@ -52,5 +52,5 @@ else {
 //   $stmt->execute();
 // //---------------------------------------------------------------------
 
- header("Location:./instructor.php",true,303);
+ header("Location:./_instructor.php",true,303);
 ?>

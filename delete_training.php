@@ -4,8 +4,7 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
-        $inst_team = htmlspecialchars($_POST["inst_team"], ENT_QUOTES);
+      $course_code = htmlspecialchars($_POST["course_code"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -21,15 +20,14 @@ else {
   exit('データベース接続失敗。'.$e->getMessage());
   }
 //----------------------------------------------------------------------
-  $table="inst_tb";
-  $column2 = "inst_name"; $column3= "inst_team";
-  $value2 = $inst_name; $value3 = $inst_team;
+  $table="training_tb";
+  $column1 = "course_code";
+  $value1 = $course_code;
 
-  $stmt = $pdo -> prepare("INSERT INTO ".$table." ($column2,$column3) VALUES (:value2, :value3)");
-  $stmt->bindValue(':value2', $value2, PDO::PARAM_STR);
-  $stmt->bindValue(':value3', $value3, PDO::PARAM_STR);
-  // $stmt->bindValue(':value', (int)$value, PDO::PARAM_INT);
+  $sql = "DELETE FROM ".$table." where $column1 = :delete1";
+  $stmt = $pdo -> prepare($sql);
+  $stmt->bindValue(":delete1", $value1, PDO::PARAM_STR);
   $stmt->execute();
 
- header("Location:./_instructor.php",true,303);
+ header("Location:./_training.php",true,303);
 ?>

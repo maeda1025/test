@@ -20,6 +20,10 @@ h1{
   margin-bottom: -1rem;
 }
 
+hr{
+  border-color: #000000;
+}
+
 table {
   margin-top: 0.5%;
   margin-left: 2.5%;

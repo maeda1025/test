@@ -11,13 +11,12 @@
 <link rel="stylesheet" href="./css/jquery-ui.min.css" type="text/css" />
 <link rel="stylesheet" href="./css/dialog.css" type="text/css" />
 <script src="./js/jquery-ui.min.js"></script>
-<script src="./js/db_dialog.js"></script>
+<script src="./js/location_dialog.js"></script>
 <!-- ---------------------------------------------------------------------- -->
 
   <?php
   //検証用---------------------------------------
-    include("C:/Users/maeda/Documents/GitHub/test/parameter.php");
-    // include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
+    include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
 		include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
     include("C:/Users/maeda/Documents/GitHub/test/function_dialog.php");
   //--------------------------------------------
@@ -28,7 +27,7 @@
 
 <body>
   <div id="menue"></div>
-  <div class="table_all">
+  <!-- <div class="table_all"> -->
 
     <div class="botton_set">
       <button id="reg_location"><b>Location追加</b></button>
@@ -38,17 +37,20 @@
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all_with_delete_botton($pdo,"Location_Table");
+      show_db_table_all_with_delete_botton($pdo,"location_tb","team","location");
     ?>
     </div>
 
     <?php
-      // $next_incremental_id = next_id($pdo,'Location_Table','location_id');
-      inst_insert_dialog($next_incremental_id);
-      inst_delete_dialog();
+      // $next_incremental_id = next_id($pdo,'inst_tb','inst_id');
+      location_insert_dialog();
+      location_delete_dialog();
+      // location_insert_dialog();
+      // location_delete_dialog();
     ?>
 
-  </div>
+  <!-- </div> -->
+  <div id="footer"></div>
 
 </body>
 

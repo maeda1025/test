@@ -90,8 +90,8 @@
 	}
 
 	//DB(Table)内全データ、Table(HTML)で表示+各行にUpdate + Deleteボタン
-		function show_db_table_all_with_delete_botton($pdo,$table){
-			$pdo_stmt = $pdo->query("SELECT * FROM $table");
+		function show_db_table_all_with_delete_botton($pdo,$table,$order_by1,$order_by2){
+			$pdo_stmt = $pdo->query("SELECT * FROM $table order by $order_by1,$order_by2");
 			//Fileds表示
 			 echo "</font>"."<table border='1'>";
 			 // echo '<caption>'.$table.'</caption>';
@@ -107,32 +107,111 @@
 			}
 				echo "<th>Upload</th><th>Delete</th>";
 				echo "</tr>";
-			//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
-			while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
-				echo("<tr>");
-				//Update Fortm作成-----------------------------------------------
-				printf ('<form action="./update_inst.php" method="post">');
-					echo('<input type="hidden" name="current_id" value="'.$result[$columns[0]].'" class="input_table">');
-				for($n=0; $n < $pdo_stmt->columnCount(); $n++){
-					echo("<td>");
-					printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
-					echo("</td>");
+
+				if($table==="inst_tb"){
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_inst.php" method="post">');
+							echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_inst.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="inst_name" id ="inst_name" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
 				}
-				echo("<td>");
-					// printf ('<form action="./upload_inst.php" method="post">');
-					printf ('<input type="submit" value="Update" class="input_table">');
-					// printf ('<input type ="hidden" name="inst_name_up" id ="inst_name_up" value="'.$result[$columns[0]].'"">');
-					printf ('</form>');
-				echo("</td>");
-				//Delete Fortm作成-----------------------------------------------
-				echo("<td>");
-					printf ('<form action="./delete_inst.php" method="post" class="form_del_inst">');
-					printf ('<input type="submit" value="Delete" class="input_table">');
-					printf ('<input type ="hidden" name="inst_id" id ="inst_id" value="'.$result[$columns[0]].'" class="input_table">');
-					printf ('</form>');
-				echo("</td>");
+				elseif($table==="location_tb"){
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_location.php" method="post">');
+							echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_location.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="location" id ="location" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
+				}
+				elseif($table==="training_tb"){
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_training.php" method="post">');
+							echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_training.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="course_code" id ="course_code" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
+				}
+				elseif($table==="schedule_tb"){
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_schedule.php" method="post">');
+							echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_schedule.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="schedule_id" id ="schedule_id" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
+				}
+				else{
+
+				}
 				echo("</tr>");
-			}
 			//----------------------------------------------------------------
 				echo "</table>";
 		}

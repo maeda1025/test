@@ -37,17 +37,18 @@
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all_with_delete_botton($pdo,"inst_tb");
+      show_db_table_all_with_delete_botton($pdo,"inst_tb","inst_team","inst_name");
     ?>
     </div>
 
     <?php
-      $next_incremental_id = next_id($pdo,'inst_tb','inst_id');
-      inst_insert_dialog($next_incremental_id);
+      // $next_incremental_id = next_id($pdo,'inst_tb','inst_id');
+      inst_insert_dialog();
       inst_delete_dialog();
     ?>
 
   <!-- </div> -->
+  <div id="footer"></div>
 
 </body>
 

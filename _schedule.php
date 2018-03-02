@@ -11,13 +11,12 @@
 <link rel="stylesheet" href="./css/jquery-ui.min.css" type="text/css" />
 <link rel="stylesheet" href="./css/dialog.css" type="text/css" />
 <script src="./js/jquery-ui.min.js"></script>
-<script src="./js/db_dialog.js"></script>
+<script src="./js/schedule_dialog.js"></script>
 <!-- ---------------------------------------------------------------------- -->
 
   <?php
   //検証用---------------------------------------
-    include("C:/Users/maeda/Documents/GitHub/test/parameter.php");
-    // include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
+    include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
 		include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
     include("C:/Users/maeda/Documents/GitHub/test/function_dialog.php");
   //--------------------------------------------
@@ -28,27 +27,28 @@
 
 <body>
   <div id="menue"></div>
-  <div class="table_all">
+  <!-- <div class="table_all"> -->
 
     <div class="botton_set">
-      <button id="reg_inst"><b>Instructor追加</b></button>
-      <button id="del_inst"><b>Instructor削除</b></button>
+      <button id="reg_schedule"><b>Schedule追加</b></button>
+      <button id="del_schedule"><b>Schedule削除</b></button>
     </div>
 
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all_with_delete_botton($pdo,"Schedule_Table");
+      show_db_table_all_with_delete_botton($pdo,"schedule_tb","schedule_id","days");
     ?>
     </div>
 
     <?php
-      // $next_incremental_id = next_id($pdo,'Location_Table','location_id');
-      inst_insert_dialog($next_incremental_id);
-      inst_delete_dialog();
+      $next_incremental_id = next_id($pdo,'schedule_tb','schedule_id');
+      schedule_insert_dialog($next_incremental_id);
+      schedule_delete_dialog();
     ?>
 
-  </div>
+  <!-- </div> -->
+  <div id="footer"></div>
 
 </body>
 

@@ -4,7 +4,7 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $inst_id = htmlspecialchars($_POST["inst_id"], ENT_QUOTES);
+        $inst_name = htmlspecialchars($_POST["inst_name"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -21,8 +21,8 @@ else {
   }
 //----------------------------------------------------------------------
   $table="inst_tb";
-  $column1 = "inst_id";
-  $value1 = $inst_id;
+  $column1 = "inst_name";
+  $value1 = $inst_name;
 
   $sql = "DELETE FROM ".$table." where $column1 = :delete1";
   $stmt = $pdo -> prepare($sql);
@@ -30,5 +30,5 @@ else {
   // $stmt->bindValue(':value', 1, PDO::PARAM_INT);
   $stmt->execute();
 
- header("Location:./instructor.php",true,303);
+ header("Location:./_instructor.php",true,303);
 ?>
