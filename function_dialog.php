@@ -105,6 +105,30 @@
     echo '</div>';
   }
 
+  function time_insert_dialog(){
+    echo '<div id="time-dialog-form" title="時刻登録">';
+      echo '<form method="post" action="./insert_time.php" id="jquery-ui-dialog">';
+      echo '<fieldset>';
+        echo '<label for="time">時刻</label>';
+        echo '<input type="text" name="time" id="time" value="" class="text ui-widget-content ui-corner-all" />';
+        echo '<input type="submit" value="登録">';
+      echo '</fieldset>';
+      echo '</form>';
+    echo '</div>';
+  }
+
+  function time_delete_dialog(){
+    echo '<div id="time-dialog-form-del" title="時刻削除">';
+      echo '<form method="post" action="./delete_time.php" id="jquery-ui-dialog">';
+      echo '<fieldset>';
+        echo '<label for="time_del">時刻</label>';
+        echo '<input type="text" name="time" id="time" value="" class="text ui-widget-content ui-corner-all" />';
+        echo '<input type="submit" value="削除">';
+      echo '</fieldset>';
+      echo '</form>';
+    echo '</div>';
+  }
+
   function schedule_insert_dialog($next_incremental_id){
     echo '<div id="schedule-dialog-form" title="トレーニング登録">';
       echo '<form method="post" action="./insert_schedule.php" id="jquery-ui-dialog">';
@@ -119,8 +143,10 @@
         echo '<input type="text" name="course_name" id="course_name" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="hoshi">★</label>';
         echo '<input type="text" name="hoshi" id="hoshi" value="" class="text ui-widget-content ui-corner-all" />';
+        echo '<label for="day1">開始日</label>';
+        echo '<input type="text" name="day1" id="day1" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="days">日数</label>';
-        echo '<input type="text" name="course_days" id="course_days" value="" class="text ui-widget-content ui-corner-all" />';
+        echo '<input type="text" name="days" id="days" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="location">教室</label>';
         echo '<input type="text" name="location" id="location" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="inst_name">講師</label>';

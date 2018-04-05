@@ -1,5 +1,24 @@
 <?php
 //PDO------------------------------------------------------------------
+//月の日数取得
+	function get_days_of_month($set_year,$set_month){
+		if($set_year!=="" and $set_month!==""){
+			$year = date($set_year); $month = date($set_month);
+		}//引数がブランクでなければ、指定年月の日数取得
+		else{	$year = date("Y"); $month = date("m"); }
+		//引数がブランクなら現在の年月から日数取得
+		$days_month = new DateTime("last day of $year-$month");
+		return $days_month -> format("d");
+	}
+
+//日数配列取得
+	function get_days($start_date,$days){
+	 for($i=0;$i<$days;$i++){
+	  $cal_days[] = date("Y/m/d", strtotime("+".$i."day",strtotime($start_date)));
+	 }
+	 return $cal_days;
+	}
+
 //DB接続
 	function connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME){
 		$dsn = "mysql:host=".$DB_HOST.";dbname=".$DB_NAME.";charset=utf8";
@@ -10,6 +29,99 @@
 	  exit('データベース接続失敗。'.$e->getMessage());
 	  }
 		return $pdo;
+	}
+
+//Table内の値のプルダウンリスト表示
+	function display_list($pdo,$table,$column,$name,$selected){
+		$pdo_stmt = $pdo->query("SELECT $column FROM $table");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$list_results[] = $result[$column];
+		}
+		echo "<select name='$name' id='$name' class='text ui-widget-content ui-corner-all'>";
+		echo "<option selected value=''>Select Something</option>";
+		foreach($list_results as $values){
+			if($values == $selected){
+				echo "<option selected value='$values'>".$values."</option>";
+			}
+			else{
+				echo "<option value='$values'>".$values."</option>";
+			}
+		}
+		echo "</select>";
+	}
+
+//Table内の値のプルダウンリスト表示(DefaultのSelected指定)
+	function display_list_selected($pdo,$table,$column,$name,$selected,$default){
+		$pdo_stmt = $pdo->query("SELECT $column FROM $table");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$list_results[] = $result[$column];
+		}
+		echo "<select name='$name' id='$name' class='text ui-widget-content ui-corner-all'>";
+		echo "<option selected value='$default'>$default</option>";
+		foreach($list_results as $values){
+			if($values == $selected){
+				echo "<option selected value='$values'>".$values."</option>";
+			}
+			else{
+				echo "<option value='$values'>".$values."</option>";
+			}
+		}
+		echo "</select>";
+	}
+
+//Table内の値のプルダウンリスト表示(重複排除)
+	function display_list_distinct($pdo,$table,$column,$name,$selected){
+		$pdo_stmt = $pdo->query("SELECT DISTINCT $column FROM $table");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$list_results[] = $result[$column];
+		}
+		echo "<select name='$name' id='$name' class='text ui-widget-content ui-corner-all'>";
+			if($selected === ""){
+				echo "<option selected value=''>Select Something</option>";
+			}
+		foreach($list_results as $values){
+			if($values == $selected){
+				echo "<option selected value='$values'>".$values."</option>";
+			}
+			else{
+				echo "<option value='$values'>".$values."</option>";
+			}
+		}
+		echo "</select>";
+	}
+
+	//Table内の値のプルダウンリスト表示（ajax）
+		function display_list_ajax($pdo,$table,$column,$name,$key,$where,$value){
+			$pdo_stmt = $pdo->query("SELECT $column FROM $table WHERE $key='$where'");
+			while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+				$list_results[] = $result[$column];
+			}
+			echo "<select name='$name' id='$name' class='text ui-widget-content ui-corner-all'>";
+			if($value!==""){
+				echo "<option value='$value'>$value</option>";
+			}
+			else{
+				echo "<option value=''>Select Something</option>";
+			}
+			foreach($list_results as $values){
+				if($values!==$value){
+					echo "<option value='$values'>".$values."</option>";
+				}
+			}
+			echo "</select>";
+		}
+
+//Table内の値のプルダウンリスト表示(Where指定)
+	function display_list_where($pdo,$table,$column,$name,$where){
+		$pdo_stmt = $pdo->query("SELECT $column FROM $table WHERE vendor='$where'");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$list_results[] = $result[$column];
+		}
+		echo "<select name='$name' id='$name' class='text ui-widget-content ui-corner-all'>";
+		foreach($list_results as $values){
+				echo "<option value='$values'>".$values."</option>";
+		}
+		echo "</select>";
 	}
 
 //PHPによるID自動割り当ての次のID取得
@@ -57,6 +169,14 @@
 		}
 		return $columns;
 	}
+//特定カラムのリスト取得
+	function one_column_select($pdo,$table,$column){
+		$pdo_stmt = $pdo -> query("SELECT $column FROM $table");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$one_column_results[] = $result[$column];
+		}
+		return $one_column_results;
+	}
 
 //DB(Table)内全データ、Table(HTML)で表示
 	function show_db_table_all($pdo,$table){
@@ -88,6 +208,43 @@
 		//----------------------------------------------------------------
 			echo "</table>";
 	}
+
+	//Reception_Schedule
+	function reception_schedule($pdo,$table,$today){
+		if($today===""){
+			$today = date('Y/m/d');
+		}
+		$columns = "vendor,course_code,day1,hoshi,course_name,location";
+		$where = "(day1='$today' OR day2='$today' OR day3='$today' OR day4='$today' OR day5='$today')";
+		$pdo_stmt = $pdo->query("SELECT $columns FROM $table WHERE $where ORDER BY location");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$list_results[] = $result;
+		}
+
+		echo "<table>";
+		echo "<tr id='top_row'><th id='vendor'>ベンダー</th><th id='course_code'>コード</th><th id='hoshi'></th><th id='course_name'>コース名</th><th id='location'>教室</th></tr>";
+
+		foreach($list_results as $key => $values){
+			if($key%2==0){
+				if($values["day1"]===$today){
+					echo "<tr><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'>".$values["hoshi"]."</td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+				}
+				else{
+					echo "<tr><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'></td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+				}
+			}
+			else{
+				if($values["day1"]===$today){
+					echo "<tr id='even'><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'>".$values["hoshi"]."</td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+				}
+				else{
+					echo "<tr id='even'>><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'></td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+				}
+			}
+		}
+		echo "</table>";
+	}
+
 
 	//DB(Table)内全データ、Table(HTML)で表示+各行にUpdate + Deleteボタン
 		function show_db_table_all_with_delete_botton($pdo,$table,$order_by1,$order_by2){
@@ -204,6 +361,31 @@
 							printf ('<form action="./delete_schedule.php" method="post" class="form_del_inst">');
 							printf ('<input type="submit" value="Delete" class="input_table">');
 							printf ('<input type ="hidden" name="schedule_id" id ="schedule_id" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
+				}
+				elseif($table==="time_tb"){
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_time.php" method="post">');
+									echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_time.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="time" id="time" value="'.$result[$columns[0]].'" class="input_table">');
 							printf ('</form>');
 						echo("</td>");
 					}
