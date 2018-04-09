@@ -1,5 +1,5 @@
 <?php
-include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
+include("C:/Users/maeda/Documents/static/Tech/GitHub/test/parameter_local.php");
 require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用

@@ -1,7 +1,7 @@
 <?php
 
-  include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
-  include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
+  include("C:/Users/maeda/Documents/static/Tech/GitHub/test/parameter_local.php");
+  include("C:/Users/maeda/Documents/static/Tech/GitHub/test/functions_db.php");
 
 
   //ajax送信でPOSTされたデータを受け取る

@@ -16,9 +16,9 @@
 
   <?php
   //検証用---------------------------------------
-    include("C:/Users/maeda/Documents/GitHub/test/parameter_local.php");
-		include("C:/Users/maeda/Documents/GitHub/test/functions_db.php");
-    include("C:/Users/maeda/Documents/GitHub/test/function_dialog.php");
+    include("C:/Users/maeda/Documents/static/Tech/GitHub/test/parameter_local.php");
+		include("C:/Users/maeda/Documents/static/Tech/GitHub/test/functions_db.php");
+    include("C:/Users/maeda/Documents/static/Tech/GitHub/test/function_dialog.php");
   //--------------------------------------------
     // include("./functions_db.php");
     // include("./function_dialog.php");
