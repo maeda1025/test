@@ -99,7 +99,7 @@
               $schedule_values = array();
               $course_summary = array();
 
-              $pdo_stmt = $pdo -> query("SELECT * FROM $table WHERE (day1 OR day2 OR day3 OR day4 OR day5 LIKE '$year/$month%') and location='$location_results'");
+              $pdo_stmt = $pdo -> query("SELECT * FROM $table WHERE (day1 OR day2 OR day3 OR day4 OR day5 LIKE '$year-$month%') and location='$location_results'");
               while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
                 $schedule_values[] = $result;
               }
@@ -112,7 +112,7 @@
                 for($day=1;$day<=$days_of_month;$day++){
                   $days_a = sprintf('%02d',$day);
                   $id_a = new DateTime("$year-$month-$days_a");
-                  $id = $id_a->format("Y/m/d");
+                  $id = $id_a->format("Y-m-d");
 
                   if($id == $course_summary[$count]["day1"] or $id == $course_summary[$count]["day2"] or $id == $course_summary[$count]["day3"] or $id == $course_summary[$count]["day4"] or $id == $course_summary[$count]["day5"]){
                     $line[$row][$column] = array(

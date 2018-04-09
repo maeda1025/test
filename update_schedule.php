@@ -19,6 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $note = htmlspecialchars($_POST["note"], ENT_QUOTES);
 
         $course_date = get_days($day1,$days);
+
+        for($i=0;$i<=4;$i++){
+          if(!isset($course_date[$i])){
+            $course_date[$i] = NULL;
+          }
+          else{ }
+        }
+        var_dump($course_date);
     }
 else {
 	echo "error";
@@ -44,7 +52,10 @@ else {
 
         $sql = "update $table set $column0 = :$column0, $column1 = :$column1, $column2 = :$column2, $column3 = :$column3, $column4 = :$column4, $column5 = :$column5, $column6 = :$column6, $column7 = :$column7, $column8 = :$column8, $column9 = :$column9, $column10 = :$column10, $column11 = :$column11, $column12 = :$column12, $column13 = :$column13, $column14 = :$column14, $column15 = :$column15 where $key_column = :target_key";
         $stmt = $pdo -> prepare($sql);
-        $params = array(":$column0" => "$value0",":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":$column4" => "$value4",":$column5" => "$value5",":$column6" => "$value6",":$column7" => "$value7",":$column8" => "$value8",":$column9" => "$value9",":$column10" => "$value10",":$column11" => "$value11",":$column12" => "$value12",":$column13" => "$value13",":$column14" => "$value14",":$column15" => "$value15",":target_key" => "$key_value");
+        // $params = array(":$column0" => "$value0",":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":$column4" => "$value4",":$column5" => "$value5",":$column6" => "$value6",":$column7" => "$value7",":$column8" => "$value8",":$column9" => "$value9",":$column10" => "$value10",":$column11" => "$value11",":$column12" => "$value12",":$column13" => "$value13",":$column14" => "$value14",":$column15" => "$value15",":target_key" => "$key_value");
+
+        $params = array(":$column0" => "$value0",":$column1" => "$value1",":$column2" => "$value2",":$column3" => "$value3",":$column4" => "$value4",":$column5" => "$value5",":$column6" => "$value6",":$column7" => "$value7",":$column8" => "$value8",":$column9" => "$value9",":$column10" => "$value10",":$column11" => $value11,":$column12" => $value12,":$column13" => $value13,":$column14" => $value14,":$column15" => $value15,":target_key" => "$key_value");
+
 
         $stmt->execute($params);
       }

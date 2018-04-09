@@ -14,7 +14,7 @@
 //日数配列取得
 	function get_days($start_date,$days){
 	 for($i=0;$i<$days;$i++){
-	  $cal_days[] = date("Y/m/d", strtotime("+".$i."day",strtotime($start_date)));
+	  $cal_days[] = date("Y-m-d", strtotime("+".$i."day",strtotime($start_date)));
 	 }
 	 return $cal_days;
 	}
@@ -29,6 +29,31 @@
 	  exit('データベース接続失敗。'.$e->getMessage());
 	  }
 		return $pdo;
+	}
+
+//Table CSV Export
+	function csv_export($pdo,$table){
+		$file_path = "./csv/".$table."_".date('Ymd_His').".csv";
+		$export_sql = "SELECT * FROM $table";
+		$export_csv_columns = get_columns_name($pdo,$table);
+
+	 foreach( $export_csv_columns as $key => $val ){
+			 $export_header[] = mb_convert_encoding($val, 'SJIS-win', 'UTF-8');
+	 }
+
+	 if(touch($file_path)){
+			 $file = new SplFileObject($file_path, "w");
+			 // write csv header
+			 $file->fputcsv($export_header);
+			 // query database
+			 $stmt = $pdo->query($export_sql);
+			 // create csv sentences
+			 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+					 $file->fputcsv($row);
+			 }
+			 // close database connection
+			 $dbh = null;
+	 }
 	}
 
 //Table内の値のプルダウンリスト表示
@@ -169,6 +194,7 @@
 		}
 		return $columns;
 	}
+
 //特定カラムのリスト取得
 	function one_column_select($pdo,$table,$column){
 		$pdo_stmt = $pdo -> query("SELECT $column FROM $table");
@@ -451,6 +477,19 @@ echo "SELECT ".$column1.",".$column2." FROM $table";
 	function select_data($table,$column,$value){
 		$sql_select = "SELECT * FROM $table WHERE $column='$value'";
 		$result_flag = mysql_query($sql_select);
+	}
+
+//Table List入手
+	function get_tables($pdo,$DB_NAME){
+		$name = "Tables_in_$DB_NAME";
+		$pdo_stmt = $pdo->query("SHOW TABLES");
+		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
+			$results[] = $result;
+		}
+		foreach($results as $value){
+			$table_results[] = $value[$name];
+		}
+		return $table_results;
 	}
 
 ?>

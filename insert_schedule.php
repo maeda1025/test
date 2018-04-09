@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $note = htmlspecialchars($_POST["note"], ENT_QUOTES);
 
         $course_date = get_days($day1,$days);
-        var_dump($course_date);
+        // var_dump($course_date);
     }
 else {
 	echo "error";
@@ -57,11 +57,11 @@ else {
   $stmt->bindValue(':value15', $value15, PDO::PARAM_STR);
   $stmt->execute();
 
-echo $value11;
-echo $value12;
-echo $value13;
-echo $value14;
-echo $value15;
+// echo $value11;
+// echo $value12;
+// echo $value13;
+// echo $value14;
+// echo $value15;
 
  $source_url = $_SERVER['HTTP_REFERER'];
  if(strstr($source_url,'add_schedule_page.php')==true){

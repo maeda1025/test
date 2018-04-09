@@ -220,7 +220,7 @@
         <script>
          $(function(){
            $('#day1').datepicker(
-             { dateFormat: 'yy/mm/dd', numberOfMonths:3, showOtherMonths: true}
+             { dateFormat: 'yy-mm-dd', numberOfMonths:3, showOtherMonths: true}
            );
          });
         </script>
