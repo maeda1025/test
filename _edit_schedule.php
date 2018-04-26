@@ -120,7 +120,7 @@
                       "vendor" => $course_summary[$count]["vendor"],
                       "course_code" => $course_summary[$count]["course_code"],
                       "course_name" => $course_summary[$count]["course_name"],
-                      "hoshi" => $course_summary[$count]["hoshi"],
+                      "start_week" => $course_summary[$count]["start_week"],
                       "day1" => $course_summary[$count]["day1"],
                       "days" => $course_summary[$count]["days"],
                       "location" => $course_summary[$count]["location"],
@@ -141,7 +141,7 @@
                   'vendor='.$line[$row][$day]["vendor"].'&&'.
                   'course_code='.$line[$row][$day]["course_code"].'&&'.
                   'course_name='.$line[$row][$day]["course_name"].'&&'.
-                  'hoshi='.$line[$row][$day]["hoshi"].'&&'.
+                  'start_week='.$line[$row][$day]["start_week"].'&&'.
                   'day1='.$line[$row][$day]["day1"].'&&'.
                   'days='.$line[$row][$day]["days"].'&&'.
                   'location='.$line[$row][$day]["location"].'&&'.
@@ -157,7 +157,7 @@
                   'vendor=&&'.
                   'course_code=&&'.
                   'course_name=&&'.
-                  'hoshi=&&'.
+                  'start_week=&&'.
                   'day1='.$year.'/'.$month.'/'.sprintf('%02d',$day).'&&'.
                   'days=&&'.
                   'location='.$location_results.'&&'.

@@ -1,3 +1,0 @@
-schedule_id,vendor,course_code,course_name,hoshi,days,day1,day2,day3,day4,day5,start_time,finish_time,location,inst_name,note
-1,VMware,VM-01,VMware-test-course,★,4,2018-04-01,2018-04-02,2018-04-03,2018-04-04,,00:00:00,00:00:00,Class01,前田　佑樹,
-2,test,test,test,,2,2018-03-26,2018-03-27,,,,00:00:00,00:00:00,Class01,,

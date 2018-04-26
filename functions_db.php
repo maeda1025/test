@@ -31,30 +31,40 @@
 		return $pdo;
 	}
 
-//Table CSV Export
-	function csv_export($pdo,$table){
-		$file_path = "./csv/".$table."_".date('Ymd_His').".csv";
-		$export_sql = "SELECT * FROM $table";
-		$export_csv_columns = get_columns_name($pdo,$table);
+	//Table CSV Export
+		function csv_export($pdo,$table){
+			$file_path = "./csv/".$table."_".date('Ymd_His').".csv";
+			$file_name = basename($file_path);
+			$file_length = filesize($file_name);
+			$export_sql = "SELECT * FROM $table";
+			$export_csv_columns = get_columns_name($pdo,$table);
 
-	 foreach( $export_csv_columns as $key => $val ){
-			 $export_header[] = mb_convert_encoding($val, 'SJIS-win', 'UTF-8');
-	 }
+		 foreach( $export_csv_columns as $key => $val ){
+				 $export_header[] = mb_convert_encoding($val,'UTF-8');
+		 }
 
-	 if(touch($file_path)){
-			 $file = new SplFileObject($file_path, "w");
-			 // write csv header
-			 $file->fputcsv($export_header);
-			 // query database
-			 $stmt = $pdo->query($export_sql);
-			 // create csv sentences
-			 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+		 if(touch($file_path)){
+		//TableないColumns出力---------------------------------------------
+				 $file = new SplFileObject($file_path, "w");
+				 // write csv header
+				 $file->fputcsv($export_header);
+		//-------------------------------------------------------
+				 // query database
+				 $stmt = $pdo->query($export_sql);
+				 // create csv sentences
+				 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+					 mb_convert_variables('UTF8',$row);
 					 $file->fputcsv($row);
-			 }
-			 // close database connection
-			 $dbh = null;
-	 }
-	}
+				 }
+
+				 header('Content-Disposition: attachment; filename="'.$file_name.'"');
+				 header("Content-Length:$file_length");
+				 header("Content-Type: application/octet-stream");
+				 readfile ($file_path);
+				 //ファイル削除
+				 unlink($file_path);
+		 }
+		}
 
 //Table内の値のプルダウンリスト表示
 	function display_list($pdo,$table,$column,$name,$selected){
@@ -195,6 +205,13 @@
 		return $columns;
 	}
 
+//カラム数取得
+	function get_columns_count($pdo,$table){
+		$pdo_stmt = $pdo->query("SELECT * FROM $table");
+		$columns_count = $pdo_stmt->columnCount();
+		return $columns_count;
+	}
+
 //特定カラムのリスト取得
 	function one_column_select($pdo,$table,$column){
 		$pdo_stmt = $pdo -> query("SELECT $column FROM $table");
@@ -235,12 +252,29 @@
 			echo "</table>";
 	}
 
+ //GetLog
+	function get_logo($vendor_logo){
+	 return '<img id="vendor_logo" src="./imgs/logo/'.$vendor_logo.'">';
+	}
+
 	//Reception_Schedule
 	function reception_schedule($pdo,$table,$today){
 		if($today===""){
 			$today = date('Y/m/d');
 		}
-		$columns = "vendor,course_code,day1,hoshi,course_name,location";
+		//ロゴファイル一覧取得-------------------------
+		$n=0;
+		$dir = "./imgs/logo";
+		if( is_dir( $dir ) && $handle = opendir( $dir ) ) {
+			while( ($file = readdir($handle)) !== false ) {
+				$vendor_names[] = str_replace(".png","",$file);
+				// $vendor_names[] = $vendor_x;
+				$file_names[] = $file;
+				$file_count++;
+			}
+		}
+		//-------------------------------------------
+		$columns = "vendor,course_code,day1,start_week,course_name,location";
 		$where = "(day1='$today' OR day2='$today' OR day3='$today' OR day4='$today' OR day5='$today')";
 		$pdo_stmt = $pdo->query("SELECT $columns FROM $table WHERE $where ORDER BY location");
 		while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)){
@@ -248,33 +282,95 @@
 		}
 
 		echo "<table>";
-		echo "<tr id='top_row'><th id='vendor'>ベンダー</th><th id='course_code'>コード</th><th id='hoshi'></th><th id='course_name'>コース名</th><th id='location'>教室</th></tr>";
+		echo "<tr id='top_row'><th id='vendor'>ベンダー</th><th id='course_code'>コード</th><th id='start_week'></th><th id='course_name'>コース名</th><th id='location'>教室</th></tr>";
 
 		foreach($list_results as $key => $values){
-			if($key%2==0){
 				if($values["day1"]===$today){
-					echo "<tr><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'>".$values["hoshi"]."</td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+					if($values["start_week"]==="yes"){
+						$values["start_week"] = "<font>★</font>";
+					}
+					elseif($values["start_week"]==="no"){
+						$values["start_week"] = "<font></font>";
+					}
+					else{
+						$values["start_week"] = "<font></font>";
+					}
 				}
 				else{
-					echo "<tr><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'></td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
+					$values["start_week"] = "<font></font>";
 				}
+
+					if($key%2==0){ echo "<tr>"; }
+					else{ echo "<tr id='even'>"; }
+
+					// Vendorロゴ追加-----------------------------------------------------------------------------
+						for($x=2;$x<=$file_count;$x++){
+									 if($values["vendor"] === $vendor_names[$x]){
+										 echo "<td class='vendor_logo'>"; echo get_logo($file_names[$x]); echo "</td>";
+										 break;
+									 }
+									}
+									if ($values["vendor"] !== $vendor_names[$x]) {echo "<td class='vendor_logo'>".$values["vendor"]."</td>";}
+
+					//-------------------------------------------------------------------------------------
+					echo "<td class='course_code'>".$values["course_code"]."</td><td class='start_week'>".$values["start_week"]."</td><td class='course_name'>".$values["course_name"]."</td><td class='location'>".$values["location"]."</td></tr>";
+				echo "</tr>";
 			}
-			else{
-				if($values["day1"]===$today){
-					echo "<tr id='even'><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'>".$values["hoshi"]."</td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
-				}
-				else{
-					echo "<tr id='even'>><td>".$values["vendor"]."</td><td>".$values["course_code"]."</td><td id='hoshi'></td><td>".$values["course_name"]."</td><td>".$values["location"]."</td></tr>";
-				}
-			}
-		}
 		echo "</table>";
 	}
 
+	//Schedule_tb内全データ、Table(HTML)で表示+各行にUpdate + Deleteボタン
+		function show_schedule_table_all_with_delete_botton($pdo,$table,$order_by1){
+			//降順表示
+				$pdo_stmt = $pdo->query("SELECT * FROM $table order by $order_by1 DESC");
+			//昇順表示
+				// $pdo_stmt = $pdo->query("SELECT * FROM $table order by $order_by1 ASC");
+			//Fileds表示
+			 echo "</font>"."<table border='1'>";
+			 // echo '<caption>'.$table.'</caption>';
+			 echo '<tr>';
+			//クエリ結果のカラム名取得+Table(HTML)表示----------------------------------------------------------------
+			$columns=NULL;
+			 for($i = 0; $i < $pdo_stmt->columnCount();$i++) {
+				 $meta = $pdo_stmt->getColumnMeta($i);
+				 $columns[] = $meta['name'];
+			}
+			foreach((array)$columns as $column_name){
+				echo "<th>".$column_name."</th>";
+			}
+				echo "<th>Upload</th><th>Delete</th>";
+				echo "</tr>";
+					//クエリ結果のData取得+Table(HTML)表示---------------------------------------------------------------
+					while($result = $pdo_stmt -> fetch(PDO::FETCH_ASSOC)) {
+						echo("<tr>");
+					//Update Fortm作成-----------------------------------------------
+						printf ('<form action="./update_schedule.php" method="post">');
+							echo('<input type="hidden" name="current_name" value="'.$result[$columns[0]].'" class="input_table">');
+								for($n=0; $n < $pdo_stmt->columnCount(); $n++){
+									echo("<td>");
+									printf('<input type="text" name="'.$columns[$n].'" value="'.$result[$columns[$n]].'" class="input_table">');
+									echo("</td>");
+								}
+						echo("<td>");
+							printf ('<input type="submit" value="Update" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					//Delete Fortm作成-----------------------------------------------
+						echo("<td>");
+							printf ('<form action="./delete_schedule.php" method="post" class="form_del_inst">');
+							printf ('<input type="submit" value="Delete" class="input_table">');
+							printf ('<input type ="hidden" name="schedule_id" id ="schedule_id" value="'.$result[$columns[0]].'" class="input_table">');
+							printf ('</form>');
+						echo("</td>");
+					}
+				echo("</tr>");
+			//----------------------------------------------------------------
+				echo "</table>";
+		}
 
 	//DB(Table)内全データ、Table(HTML)で表示+各行にUpdate + Deleteボタン
 		function show_db_table_all_with_delete_botton($pdo,$table,$order_by1,$order_by2){
-			$pdo_stmt = $pdo->query("SELECT * FROM $table order by $order_by1,$order_by2");
+				$pdo_stmt = $pdo->query("SELECT * FROM $table order by $order_by1,$order_by2");
 			//Fileds表示
 			 echo "</font>"."<table border='1'>";
 			 // echo '<caption>'.$table.'</caption>';
@@ -423,6 +519,7 @@
 			//----------------------------------------------------------------
 				echo "</table>";
 		}
+
 
 //PDO------------------------------------------------------------------
 

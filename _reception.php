@@ -15,7 +15,7 @@
   //--------------------------------------------
     // include("./functions_db.php");
     // include("./function_dialog.php");
-    $today ="2018/03/01";//検証用
+    $today = date("Y-m-d");
 	?>
 
 </head>

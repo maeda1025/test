@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $vendor = htmlspecialchars($_POST["vendor"], ENT_QUOTES);
         $course_code = htmlspecialchars($_POST["course_code"], ENT_QUOTES);
         $course_name = htmlspecialchars($_POST["course_name"], ENT_QUOTES);
-        $hoshi = htmlspecialchars($_POST["hoshi"], ENT_QUOTES);
+        $start_week = htmlspecialchars($_POST["start_week"], ENT_QUOTES);
         $day1 = htmlspecialchars($_POST["day1"], ENT_QUOTES);
         $days = htmlspecialchars($_POST["days"], ENT_QUOTES);
         $location = htmlspecialchars($_POST["location"], ENT_QUOTES);
@@ -35,8 +35,8 @@ else {
   }
 //----------------------------------------------------------------------
   $table="schedule_tb";
-  $column0 = "schedule_id"; $column1 = "vendor"; $column2 = "course_code"; $column3= "course_name"; $column4 = "hoshi"; $column5 = "days"; $column6= "location"; $column7= "inst_name"; $column8= "start_time"; $column9= "finish_time"; $column10= "note"; $column11= "day1"; $column12= "day2"; $column13= "day3"; $column14= "day4"; $column15= "day5";
-  $value0 = $schedule_id; $value1 = $vendor; $value2 = $course_code; $value3 = $course_name; $value4 = $hoshi; $value5 = $days; $value6 = $location; $value7 = $inst_name; $value8 = $start_time; $value9 = $finish_time; $value10 = $note; $value11 = $day1; $value12 = $course_date[1]; $value13 = $course_date[2]; $value14 = $course_date[3]; $value15 = $course_date[4];
+  $column0 = "schedule_id"; $column1 = "vendor"; $column2 = "course_code"; $column3= "course_name"; $column4 = "start_week"; $column5 = "days"; $column6= "location"; $column7= "inst_name"; $column8= "start_time"; $column9= "finish_time"; $column10= "note"; $column11= "day1"; $column12= "day2"; $column13= "day3"; $column14= "day4"; $column15= "day5";
+  $value0 = $schedule_id; $value1 = $vendor; $value2 = $course_code; $value3 = $course_name; $value4 = $start_week; $value5 = $days; $value6 = $location; $value7 = $inst_name; $value8 = $start_time; $value9 = $finish_time; $value10 = $note; $value11 = $day1; $value12 = $course_date[1]; $value13 = $course_date[2]; $value14 = $course_date[3]; $value15 = $course_date[4];
 
   $stmt = $pdo -> prepare("INSERT INTO ".$table." ($column0,$column1,$column2,$column3,$column4,$column5,$column6,$column7,$column8,$column9,$column10,$column11,$column12,$column13,$column14,$column15) VALUES (:value0, :value1, :value2, :value3,:value4, :value5, :value6,:value7, :value8, :value9, :value10, :value11, :value12, :value13, :value14, :value15)");
   $stmt->bindValue(':value0', (int)$value0, PDO::PARAM_INT);

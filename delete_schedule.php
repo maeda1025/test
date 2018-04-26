@@ -29,5 +29,12 @@ else {
   $stmt->bindValue(":delete1", $value1, PDO::PARAM_STR);
   $stmt->execute();
 
- header("Location:./_schedule.php",true,303);
+ $source_url = $_SERVER['HTTP_REFERER'];
+ if(strstr($source_url,'_schedule.php')==true){
+   header("Location:./_schedule.php",true,303);
+ }
+ else{
+   header("Location:./_edit_schedule.php",true,303);
+ }
+
 ?>

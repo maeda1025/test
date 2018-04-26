@@ -20,6 +20,14 @@
       // include("./functions_db.php");
       // include("./function_dialog.php");
   	?>
+    <script>
+    //formのbuttonを振り分けるJS------
+    function submitAction(url) {
+      $('form').attr('action', url);
+      $('form').submit();
+    }
+    //------------------------------
+    </script>
   </head>
 
   <body>
@@ -31,7 +39,7 @@
       $vendor = $_GET["vendor"];
       $course_code = $_GET["course_code"];
       $course_name = $_GET["course_name"];
-      $hoshi = $_GET["hoshi"];
+      $start_week = $_GET["start_week"];
       $day1 = $_GET["day1"];
       $days = $_GET["days"];
       $location = $_GET["location"];
@@ -45,7 +53,7 @@
       $vendor = $_GET["vendor"];
       $course_code = $_GET["course_code"];
       $course_name = $_GET["course_name"];
-      $hoshi = $_GET["hoshi"];
+      $start_week = $_GET["start_week"];
       $day1 = $_GET["day1"];
       $days = $_GET["days"];
       $location = $_GET["location"];
@@ -197,20 +205,20 @@
 
             });
           </script>
-        <li><label for="hoshi">★：</label>
-          <select name="hoshi" id="hoshi" class="text ui-widget-content ui-corner-all">
+        <li><label for="start_week">★：</label>
+          <select name="start_week" id="start_week" class="text ui-widget-content ui-corner-all">
             <?php
-              if($hoshi == "★"){
-                echo "<option selected>$hoshi</option>";
-                echo "<option>　</option>";
+              if($start_week === "yes"){
+                echo "<option selected value='yes'>★</option>";
+                echo "<option value='no'>　</option>";
               }
-              elseif($hoshi == "　"){
-                echo "<option selected>$hoshi</option>";
-                echo "<option>★</option>";
+              elseif($start_week === "no"){
+                echo "<option selected value='no'> </option>";
+                echo "<option value='yes'>★</option>";
               }
               else{
-                echo "<option>★</option>";
-                echo "<option>　</option>";
+                echo "<option value='yes'>★</option>";
+                echo "<option value='no'>　</option>";
               }
             echo "</select>";
              ?>
@@ -252,7 +260,22 @@
         <li><label for="note">備考欄：</label>
         <input type="text" name="note" id="note" value="<?php echo $note; ?>" class="text ui-widget-content ui-corner-all" /></li>
         <div style="float: left;" id="popup_error"></div>
-        <input id="submit_button" type="submit" value="登録">
+
+        <?php
+        if($schedule_id == $next_incremental_id){
+          $submit_url = "'./insert_schedule.php'";
+          $button_name = "登録";
+          $print_url = "'./insert_schedule.php'";
+        }
+        else{
+          $submit_url = "'./update_schedule.php'";
+          $button_name = "更新";
+          $print_url = "'./print_schedule.php?location=$location&&days=$days&&day1=$day1&&course_code=$course_code&&course_name=$course_name&&inst_name=$inst_name&&vendor=$vendor'";
+        }
+        echo '<button type="button" onclick="submitAction('.$submit_url.')">'.$button_name.'</button>';
+        ?>
+        <button type="button" onclick="submitAction('./delete_schedule.php')">削除</button>
+        <?php echo '<button type="button" onclick="submitAction('.$print_url.')">印刷</button>'; ?>
       </ul>
       </form>
     </div>

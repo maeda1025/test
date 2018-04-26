@@ -141,8 +141,8 @@
         echo '<input type="text" name="course_code" id="course_code" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="course_name">コース名</label>';
         echo '<input type="text" name="course_name" id="course_name" value="" class="text ui-widget-content ui-corner-all" />';
-        echo '<label for="hoshi">★</label>';
-        echo '<input type="text" name="hoshi" id="hoshi" value="" class="text ui-widget-content ui-corner-all" />';
+        echo '<label for="start_week">★</label>';
+        echo '<input type="text" name="start_week" id="start_week" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="day1">開始日</label>';
         echo '<input type="text" name="day1" id="day1" value="" class="text ui-widget-content ui-corner-all" />';
         echo '<label for="days">日数</label>';

@@ -1,5 +1,5 @@
 html{
-  font-size: 1rem;
+  font-size: 10px;
   height: 100%;
   /* height: 470px; */
 }
@@ -9,27 +9,6 @@ body{
   margin-top:0rem;
   margin-left:auto;
   margin-right: auto;
-}
-
-img#floor_map_img{
-  width: auto;
-  height: 100%;
-  align: center;
-}
-
-table {
-  margin-top: 0.5%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-  border-collapse: collapse;
-  border-spacing: 1px;
-  line-height: 1;
-  font-size: 1rem;
-  width: 95%;
-  table-layout: fixed;
-  word-break: break-all;
-  word-wrap: break-word;
-  font-size: 1vw;
 }
 
 h1{
@@ -47,6 +26,29 @@ hr{
   border-color: #000000;
 }
 
+table {
+  margin-top: 0.5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  border-collapse: collapse;
+  border-spacing: 1px;
+  line-height: 1;
+  font-size: 2rem;
+  width: 95%;
+  table-layout: fixed;
+  word-break: break-all;
+  word-wrap: break-word;
+  font-size: 1.5vw;
+}
+
+tr#top_row{
+  background: #4574C4;
+}
+
+tr#even {
+  background: #D9E1F2;
+}
+
 th {
   width: auto;
   padding: 1rem;
@@ -57,6 +59,7 @@ th {
   text-align: center;
   vertical-align: center;
   border-width: 0px 0px;
+  font-size: 1vw;
 }
 
 th#vendor{
@@ -65,7 +68,7 @@ th#vendor{
 th#course_code{
   width: 10%;
 }
-th#hoshi{
+th#start_week{
   width: 5%;
 }
 th#course_name{
@@ -81,18 +84,38 @@ td{
   /* border: solid 1px #000000; */
 }
 
-td#hoshi{
-  width: 1%;
+td.vendor_logo{
+  position: relative;
+  height: 60px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+td.course_code{
+  text-align: center;
+}
+td.start_week{
   text-align: center;
   color: red;
 }
-
-tr#top_row{
-  background: #4574C4;
+td.course_name{
+  text-align: left;
+}
+td.location{
+  text-align: center;
 }
 
-tr#even {
-  background: #D9E1F2;
+img#vendor_logo{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+img#floor_map_img{
+  width: auto;
+  height: 100%;
+  align: center;
 }
 
 div#reception_header_div{
@@ -119,11 +142,12 @@ div#table_title{
   margin-right: auto;
   margin-top: -1.5rem;
   margin-bottom: -1.8rem;
+  font-size: 2rem;
 }
 
 p#reception_today{
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   text-align: right;
   margin-right: 2.5%;
   margin-bottom: 0.5%;
@@ -131,6 +155,7 @@ p#reception_today{
 
 div#title{
   font-weight: bold;
+  font-size: 2rem;
   color: #26BDEF;
   text-align: center;
   text-decoration: underline;
@@ -156,7 +181,7 @@ div#notice_div{
   table-layout: fixed;
   word-break: break-all;
   word-wrap: break-word;
-  font-size: 1vw;
+  font-size: 1.2vw;
   background: #EEEEEE;
 }
 
@@ -177,5 +202,3 @@ div#floor_map_div{
   word-wrap: break-word;
   font-size: 1vw;
 }
-
-

@@ -5,7 +5,8 @@
         font-family: -apple-system, BlinkMacSystemFont,'Helvetica Neue','Segoe UI','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
 } */
 html{
-  font-size: 1rem;
+  /* font-size: 1rem; */
+  font-size: 10px;
 }
 
 body{
@@ -92,4 +93,3 @@ input.input_table{
   clear: both;
   text-align: left;
 }
-

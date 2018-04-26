@@ -4,7 +4,9 @@ require_once 'functions_db.php';
 //----------------------------------------------------------
 //POST受け取り用
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $time = htmlspecialchars($_POST["time"], ENT_QUOTES);
+  $location = htmlspecialchars($_POST["location"], ENT_QUOTES);
+  // $team = htmlspecialchars($_POST["team"], ENT_QUOTES);
+  // $sheet_counts = htmlspecialchars($_POST["sheet_counts"], ENT_QUOTES);
     }
 else {
 	echo "error";
@@ -20,9 +22,11 @@ else {
   exit('データベース接続失敗。'.$e->getMessage());
   }
 //----------------------------------------------------------------------
-  $table="time_tb";
-  $column1 = "time";
-  $value1 = $time;
+  $table="location_tb";
+  $column1 = "location";
+  // $column2 = "team"; $column3 = "sheet_counts";
+  $value1 = $location;
+  // $value1 = $team; $value1 = $sheet_counts;
 
   $sql = "DELETE FROM ".$table." where $column1 = :delete1";
   $stmt = $pdo -> prepare($sql);
@@ -30,5 +34,5 @@ else {
   // $stmt->bindValue(':value', 1, PDO::PARAM_INT);
   $stmt->execute();
 
- header("Location:./_time.php",true,303);
+ header("Location:./_location.php",true,303);
 ?>

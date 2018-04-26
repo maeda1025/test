@@ -37,7 +37,7 @@
     <div id="table">
     <?php
       $pdo= connect_db_pdo($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
-      show_db_table_all_with_delete_botton($pdo,"schedule_tb","schedule_id","days");
+      show_schedule_table_all_with_delete_botton($pdo,"schedule_tb","schedule_id");
     ?>
     </div>
 
