@@ -1,0 +1,211 @@
+@media screen{
+    .hidden-print {
+        display: none;
+    }
+    .container{
+        top:0 !IMPORTANT;
+        left:0 !IMPORTANT;
+        width:172mm !IMPORTANT;
+        height:251mm !IMPORTANT;
+    }
+}
+
+@media print{
+	.no_print{
+		display:none;
+	}
+
+}
+
+@page{margin:0;}
+
+.container{
+	margin-top:auto;
+	margin-bottom:auto;
+	margin-left:auto;
+	margin-right:auto;
+	width:100%;
+	height:100%;
+}
+
+.print_block_0{
+	position:relative;
+	width: 166.5mm;
+	height: 4mm;
+	margin-top:10%;
+        margin-left:auto;
+        margin-right:auto;
+	text-align:left;
+	font-weight:bold;
+	font-size:small;
+}
+
+.print_block_1{
+        position:relative;
+        top:0;
+        margin-left:auto;
+	margin-right:auto;
+        width: 166.5mm;
+        height: 30mm;
+        border: solid;
+        border-collapse: collapse;
+        border-spacing: 1px;
+	border-color:gray;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+}
+.print_block_1 input{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 158mm;
+        height: 98%;
+        border:none;
+        text-align:center;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:normal;
+        font-size:40pt;
+}
+
+.print_block_2{
+        position:relative;
+	top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 166.5mm;
+        height: 10%;
+        border-bottom:solid;
+	border-left:solid;
+	border-right:solid;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        border-color:gray;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:xx-large;
+}
+.print_block_2 input{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 158mm;
+        height: 98%;
+        border:none;
+        text-align:center;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:40pt;
+}
+
+.print_block_3{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 166.5mm;
+        height: 120mm;
+        border-bottom:solid;
+        border-left:solid;
+        border-right:solid;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        border-color:gray;
+	text-align:center;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	vertical-align:middle;
+}
+.print_block_3 textarea{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 162mm;
+        height: 98%;
+        border:none;
+        text-align:center;
+	overflow:hidden;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:41pt;
+}
+.print_block_4{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 166.5mm;
+        height: 30mm;
+        border-bottom:solid;
+        border-left:solid;
+        border-right:solid;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        border-color:gray;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:xx-large;
+}
+.print_block_4 input{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 158mm;
+        height: 98%;
+        border:none;
+        text-align:center;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:40pt;
+
+}
+.print_block_5{
+        position:relative;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        width: 166.5mm;
+        height: 40mm;
+        border-bottom:solid;
+        border-left:solid;
+        border-right:solid;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        border-color:gray;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        vertical-align:middle;
+        font-weight:bold;
+        font-size:42pt;
+}
+
+.print_block_5 img{
+	width: auto;
+	max-width: 100mm;
+        height: 98%;
+}
