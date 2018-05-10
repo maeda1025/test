@@ -165,7 +165,7 @@
                   'start_time=&&'.
                   'finish_time=&&'.
                   'note=&&';
-                  echo '<td><a href="'.$url.'" class="course_a">'.'Add'.'</a></td>';
+                  echo '<td style="width:auto; height:10px;"><a href="'.$url.'" class="course_a" style="display:block; width:100%; height:100%;">'.''.'</a></td>';
                 }
 
               }

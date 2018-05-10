@@ -32,13 +32,13 @@ hr{
 
 table {
   margin-top: 0.5%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
   border-spacing: 1px;
   line-height: 1;
   font-size: 1rem;
-  width: 95%;
+  width: 99.5%;
   table-layout: fixed;
   word-break: break-all;
   word-wrap: break-word;
@@ -72,6 +72,8 @@ td{
   /* width:auto; */
   border: solid 1px #000000;
   /* border-width: thin; */
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .even {
